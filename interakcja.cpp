@@ -244,15 +244,11 @@ void Cykl_WS()
 	   //id klienta
 	   int iid_klienta = CudzeObiekty[i]->iID;
 	   // tutaj nale¿y umieœciæ kod zadania podstawowego
-	   //  CudzeObiekty[i]->wPol = stan_z_ost_ramki[iid_klienta].wPol + stan_z_ost_ramki[iid_klienta].wV*(clock() - czas_ost_ramki[iid_klienta]) * 1000;
-	   // CudzeObiekty[i]->wV = stan_z_ost_ramki[iid_klienta].wV + ;
-	   //wRot = wV-kat*deltat
+	   CudzeObiekty[i]->wPol = stan_z_ost_ramki[i].wPol + stan_z_ost_ramki[i].wV * (clock() - czas_ost_ramki[i]) / 1000 + stan_z_ost_ramki[i].wA * (clock() - czas_ost_ramki[i]) / 2 / 1000;
+	   CudzeObiekty[i]->wV = stan_z_ost_ramki[i].wV;	//	+	stan_z_ost_ramki[i].wV	*	(clock() - czas_ost_ramki[i]) / 1000;
+	   Wektor3 wRot = stan_z_ost_ramki[i].wV_kat * (clock() - czas_ost_ramki[i]);
 	   //CudzeObiekty[i]->qOrient = qRot = qQorient
 	   //CudzeObiekty[i]->qOrient = stan_z_ost_ramki[iid_klienta].qOrient + ..
-
-
-
-
 
    } // po cudzych obiektach
 
