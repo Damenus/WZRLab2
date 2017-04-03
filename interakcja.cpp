@@ -241,7 +241,19 @@ void Cykl_WS()
   // ------------  Miejsce na predykcjê stanu:
    for (int i=0;i<iLiczbaCudzychOb;i++)
    {
-	
+	   //id klienta
+	   int iid_klienta = CudzeObiekty[i]->iID;
+	   // tutaj nale¿y umieœciæ kod zadania podstawowego
+	   //  CudzeObiekty[i]->wPol = stan_z_ost_ramki[iid_klienta].wPol + stan_z_ost_ramki[iid_klienta].wV*(clock() - czas_ost_ramki[iid_klienta]) * 1000;
+	   // CudzeObiekty[i]->wV = stan_z_ost_ramki[iid_klienta].wV + ;
+	   //wRot = wV-kat*deltat
+	   //CudzeObiekty[i]->qOrient = qRot = qQorient
+	   //CudzeObiekty[i]->qOrient = stan_z_ost_ramki[iid_klienta].qOrient + ..
+
+
+
+
+
    } // po cudzych obiektach
 
 }
