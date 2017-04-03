@@ -241,14 +241,23 @@ void Cykl_WS()
   // ------------  Miejsce na predykcjê stanu:
    for (int i=0;i<iLiczbaCudzychOb;i++)
    {
-	   //id klienta
-	   int iid_klienta = CudzeObiekty[i]->iID;
 	   // tutaj nale¿y umieœciæ kod zadania podstawowego
-	   CudzeObiekty[i]->wPol = stan_z_ost_ramki[i].wPol + stan_z_ost_ramki[i].wV * (clock() - czas_ost_ramki[i]) / 1000 + stan_z_ost_ramki[i].wA * (clock() - czas_ost_ramki[i]) / 2 / 1000;
-	   CudzeObiekty[i]->wV = stan_z_ost_ramki[i].wV;	//	+	stan_z_ost_ramki[i].wV	*	(clock() - czas_ost_ramki[i]) / 1000;
-	   Wektor3 wRot = stan_z_ost_ramki[i].wV_kat * (clock() - czas_ost_ramki[i]);
-	   //CudzeObiekty[i]->qOrient = qRot = qQorient
-	   //CudzeObiekty[i]->qOrient = stan_z_ost_ramki[iid_klienta].qOrient + ..
+
+	   int delta_T = (clock() - czas_ost_ramki[i]) / 1000;
+
+	   //CudzeObiekty[i]->wPol = stan_z_ost_ramki[i].wPol + stan_z_ost_ramki[i].wV * delta_T + stan_z_ost_ramki[i].wA * (clock() - czas_ost_ramki[i]) / 2 / 1000;
+	   //CudzeObiekty[i]->wV = stan_z_ost_ramki[i].wV;	//	+	stan_z_ost_ramki[i].wV	*	(clock() - czas_ost_ramki[i]) / 1000;
+
+	   CudzeObiekty[i]->wV = stan_z_ost_ramki[i].wV + CudzeObiekty[i]->wA * (clock() - czas_ost_ramki[i]) / 1000;
+	   CudzeObiekty[i]->wA = (CudzeObiekty[i]->wV - stan_z_ost_ramki[i].wV) / (clock() - czas_ost_ramki[i]) / 1000;
+	   CudzeObiekty[i]->wPol = stan_z_ost_ramki[i].wPol + CudzeObiekty[i]->wV * (clock() - czas_ost_ramki[i]) / 1000 + CudzeObiekty[i]->wA * (clock() - czas_ost_ramki[i]) / 1000 / 2;
+
+
+	   Wektor3 wRot = stan_z_ost_ramki[i].wV_kat * (clock() - czas_ost_ramki[i]) / 1000;
+	   kwaternion qRot = AsixToQuat(wRot.znorm(), wRot.dlugosc());
+	   CudzeObiekty[i]->qOrient = qRot * stan_z_ost_ramki[i].qOrient;
+
+
 
    } // po cudzych obiektach
 
